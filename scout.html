@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+
+        div {
+            border: solid;
+            border-width: thin;
+            border-color: black;
+            background-color: lightgrey;
+        }
+
+        .formdiv {
+            border: solid;
+            border-width: thin;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min-content, 300px));
+            background-color: lightgrey;
+        }
+
+        .countercontainer {
+            border: solid;
+            border-width: thin;
+        }
+
+        .section {
+            border: solid;
+            border-width: thin;
+            background-color:lightgrey;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 50px 1fr;
+            gap: 0px 0px;
+
+
+        }
+
+        .sectiontitle {
+            border: solid;
+            border-width: thin;
+            background-color: #FF5400;
+            height: 50px;
+            grid-row: auto;
+            text-align: center;
+
+        }
+
+
+        .fieldsdiv {
+            border: solid;
+            border-width: thin;
+            grid-row: auto;
+            background-color: lightgrey;
+        }
+
+        .input-p {
+            text-align: left;
+            color: rgb(0 0 0/var(--tw-text-opacity));
+            background-color: inherit; 
+
+
+        }
+
+        .input-p-required {
+            text-align: right;
+            color: rgb(0 0 0/var(--tw-text-opacity));
+            background-color: inherit;
+        }
+
+
+        .fieldsdiv .numberinput {
+            text-align: right;
+        }
+
+        .fieldsdiv .textinput {
+            text-align: right;
+        }
+
+        .fieldsdiv .selectinput {
+            text-align: right;
+        }
+
+        .fieldsdiv .checkboxinput {
+            text-align: right;
+        }
+*/
+        input[type="text" i] {
+            background-color: rgb(55 65 81);
+        }
+
+    </style>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="qrcode.js"></script>
+    <script>
+        function validateForm() {
+            // check that the form has require data
+            //TODO add a meaningful test
+           /* let x = document.forms["myForm"]["fname"].value;
+            if (x == "") {
+                alert("Name must be filled out");
+                return false;
+            }
+            */
+           return true;
+        }
+        function action() {
+            let aForm = document.forms["myForm"];
+
+        var jsonData = {};
+        for (let index = 0; index < aForm.length; index++) {
+            console.log(aForm[index].type + " -- " + aForm[index].parent + " -- " + aForm[index].name + " -- " + aForm[index].value)
+            //Add QR code Generation here
+            var columnName = aForm[index].name;
+            jsonData[aForm[index].name] = aForm[index].value;
+        }
+        console.log(jsonData);
+         
+
+            let qrcode = new QRCode("myForm", {
+    text: JSON.stringify(jsonData),
+    width: 256,
+    height: 256,
+    colorDark : "#000000",
+    colorLight : "#ffffff",
+    //    correctLevel : QRCode.CorrectLevel.H
+});
+
+        }
+        function submitaction() {
+            // TODO is this function called anymore?
+            let aForm = document.forms["myForm"];
+
+            for (let index = 0; index < aForm.length; index++) {
+                alert(aForm[index].type)
+            }
+
+        }
+
+        function getCached(key) {
+            // get the configuration data from local storage
+                // this is base64 encoded
+                const defaultconfig = "ew0KICAgICIkc2NoZW1hIjogIi4uL3NjaGVtYS5qc29uIiwNCiAgICAidGl0bGUiOiAiUVJTY291dCIsDQogICAgInBhZ2VfdGl0bGUiOiAiQ2hhcmdlZCBVcCIsDQogICAgInNlY3Rpb25zIjogWw0KICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6ICJQcmVtYXRjaCIsDQogICAgICAgICAgICAicHJlc2VydmVEYXRhT25SZXNldCI6IHRydWUsDQogICAgICAgICAgICAiZmllbGRzIjogWw0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogImRkZGRkU2NvdXRlciBJbml0aWFscyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInRleHQiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJzY291dGVyIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiZGRkZGRNYXRjaCBOdW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJudW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJtYXRjaE51bWJlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlJvYm90IiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAic2VsZWN0IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAicm9ib3QiLA0KICAgICAgICAgICAgICAgICAgICAiY2hvaWNlcyI6IHsNCiAgICAgICAgICAgICAgICAgICAgICAgICJSMSI6ICJSZWQgMSIsDQogICAgICAgICAgICAgICAgICAgICAgICAiUjIiOiAiUmVkIDIiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlIzIjogIlJlZCAzIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJCMSI6ICJCbHVlIDEiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkIyIjogIkJsdWUgMiIsDQogICAgICAgICAgICAgICAgICAgICAgICAiQjMiOiAiQmx1ZSAzIg0KICAgICAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogIlIxIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiVGVhbSBOdW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJudW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0ZWFtTnVtYmVyIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiTm8gU2hvdyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImJvb2xlYW4iLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJub1Nob3ciDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJVc2luZyBIdW1hbiBQbGF5ZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiaHVtYW5QbGF5ZXIiDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgXQ0KICAgICAgICB9LCAgICAgICAgew0KICAgICAgICAgICAgIm5hbWUiOiAiUHJlbWF0Y2giLA0KICAgICAgICAgICAgInByZXNlcnZlRGF0YU9uUmVzZXQiOiB0cnVlLA0KICAgICAgICAgICAgImZpZWxkcyI6IFsNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJkZGRkZFNjb3V0ZXIgSW5pdGlhbHMiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0ZXh0IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic2NvdXRlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogImRkZGRkTWF0Y2ggTnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAibnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAibWF0Y2hOdW1iZXIiDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJSb2JvdCIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInNlbGVjdCIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IHRydWUsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInJvYm90IiwNCiAgICAgICAgICAgICAgICAgICAgImNob2ljZXMiOiB7DQogICAgICAgICAgICAgICAgICAgICAgICAiUjEiOiAiUmVkIDEiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlIyIjogIlJlZCAyIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJSMyI6ICJSZWQgMyIsDQogICAgICAgICAgICAgICAgICAgICAgICAiQjEiOiAiQmx1ZSAxIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJCMiI6ICJCbHVlIDIiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkIzIjogIkJsdWUgMyINCiAgICAgICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICJSMSINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlRlYW0gTnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAibnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAidGVhbU51bWJlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIk5vIFNob3ciLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAibm9TaG93Ig0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiVXNpbmcgSHVtYW4gUGxheWVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogImh1bWFuUGxheWVyIg0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIF0NCiAgICAgICAgfSwgICAgICAgIHsNCiAgICAgICAgICAgICJuYW1lIjogIlByZW1hdGNoIiwNCiAgICAgICAgICAgICJwcmVzZXJ2ZURhdGFPblJlc2V0IjogdHJ1ZSwNCiAgICAgICAgICAgICJmaWVsZHMiOiBbDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiZGRkZGRTY291dGVyIEluaXRpYWxzIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAidGV4dCIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IHRydWUsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInNjb3V0ZXIiDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJkZGRkZE1hdGNoIE51bWJlciIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIm51bWJlciIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IHRydWUsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogIm1hdGNoTnVtYmVyIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiUm9ib3QiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJzZWxlY3QiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJyb2JvdCIsDQogICAgICAgICAgICAgICAgICAgICJjaG9pY2VzIjogew0KICAgICAgICAgICAgICAgICAgICAgICAgIlIxIjogIlJlZCAxIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJSMiI6ICJSZWQgMiIsDQogICAgICAgICAgICAgICAgICAgICAgICAiUjMiOiAiUmVkIDMiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkIxIjogIkJsdWUgMSIsDQogICAgICAgICAgICAgICAgICAgICAgICAiQjIiOiAiQmx1ZSAyIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJCMyI6ICJCbHVlIDMiDQogICAgICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiAiUjEiDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJUZWFtIE51bWJlciIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogIm51bWJlciIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IHRydWUsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInRlYW1OdW1iZXIiDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJObyBTaG93IiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogIm5vU2hvdyINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlVzaW5nIEh1bWFuIFBsYXllciIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImJvb2xlYW4iLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJodW1hblBsYXllciINCiAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICBdDQogICAgICAgIH0sICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6ICJQcmVtYXRjaCIsDQogICAgICAgICAgICAicHJlc2VydmVEYXRhT25SZXNldCI6IHRydWUsDQogICAgICAgICAgICAiZmllbGRzIjogWw0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogImRkZGRkU2NvdXRlciBJbml0aWFscyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInRleHQiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJzY291dGVyIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiZGRkZGRNYXRjaCBOdW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJudW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJtYXRjaE51bWJlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlJvYm90IiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAic2VsZWN0IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAicm9ib3QiLA0KICAgICAgICAgICAgICAgICAgICAiY2hvaWNlcyI6IHsNCiAgICAgICAgICAgICAgICAgICAgICAgICJSMSI6ICJSZWQgMSIsDQogICAgICAgICAgICAgICAgICAgICAgICAiUjIiOiAiUmVkIDIiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlIzIjogIlJlZCAzIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJCMSI6ICJCbHVlIDEiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkIyIjogIkJsdWUgMiIsDQogICAgICAgICAgICAgICAgICAgICAgICAiQjMiOiAiQmx1ZSAzIg0KICAgICAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogIlIxIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiVGVhbSBOdW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJudW1iZXIiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiB0cnVlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0ZWFtTnVtYmVyIg0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiTm8gU2hvdyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImJvb2xlYW4iLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJub1Nob3ciDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJVc2luZyBIdW1hbiBQbGF5ZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiaHVtYW5QbGF5ZXIiDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgXQ0KICAgICAgICB9LCAgICAgICAgew0KICAgICAgICAgICAgIm5hbWUiOiAiUHJlbWF0Y2giLA0KICAgICAgICAgICAgInByZXNlcnZlRGF0YU9uUmVzZXQiOiB0cnVlLA0KICAgICAgICAgICAgImZpZWxkcyI6IFsNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJkZGRkZFNjb3V0ZXIgSW5pdGlhbHMiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJ0ZXh0IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAic2NvdXRlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogImRkZGRkTWF0Y2ggTnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAibnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAibWF0Y2hOdW1iZXIiDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJSb2JvdCIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInNlbGVjdCIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IHRydWUsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInJvYm90IiwNCiAgICAgICAgICAgICAgICAgICAgImNob2ljZXMiOiB7DQogICAgICAgICAgICAgICAgICAgICAgICAiUjEiOiAiUmVkIDEiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlIyIjogIlJlZCAyIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJSMyI6ICJSZWQgMyIsDQogICAgICAgICAgICAgICAgICAgICAgICAiQjEiOiAiQmx1ZSAxIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJCMiI6ICJCbHVlIDIiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkIzIjogIkJsdWUgMyINCiAgICAgICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICJSMSINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlRlYW0gTnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAibnVtYmVyIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogdHJ1ZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAidGVhbU51bWJlciINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIk5vIFNob3ciLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAibm9TaG93Ig0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiVXNpbmcgSHVtYW4gUGxheWVyIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogImh1bWFuUGxheWVyIg0KICAgICAgICAgICAgICAgIH0NCiAgICAgICAgICAgIF0NCiAgICAgICAgfSwNCiAgICAgICAgew0KICAgICAgICAgICAgIm5hbWUiOiAiQXV0b25vbW91cyIsDQogICAgICAgICAgICAiZmllbGRzIjogWw0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlN0YXJ0aW5nIExvY2F0aW9uIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAic2VsZWN0IiwNCiAgICAgICAgICAgICAgICAgICAgImNob2ljZXMiOiB7DQogICAgICAgICAgICAgICAgICAgICAgICAibGVmdCI6ICJMZWZ0IiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJtaWRkbGUiOiAiTWlkZGxlIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJyaWdodCI6ICJSaWdodCINCiAgICAgICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICJsZWZ0IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogImF1dG9TdGFydCINCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiYW0iLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiTW9iaWxpdHk/IiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiYXVjIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlVwcGVyIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJhdWNtIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlVwcGVyIEN1YmUvQ29uZSBNaXNzZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJhbWMiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiTWlkZGxlIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJhbWNtIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIk1pZGRsZSBDdWJlL0NvbmUgTWlzc2VkIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiY291bnRlciIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiAwLA0KICAgICAgICAgICAgICAgICAgICAibWluIjogMCwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiYWxjIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIkxvd2VyIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJhbGNtIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIkxvd2VyIEN1YmUvQ29uZSBNaXNzZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJhYyIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJQaWNrZWQgdXAgbW9yZSBDdWJlL0NvbmU/IiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiYWQiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiRG9ja2VkIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiYWUiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiRW5nYWdlZCIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImJvb2xlYW4iLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogZmFsc2UsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgXQ0KICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6ICJUZWxlb3AiLA0KICAgICAgICAgICAgImZpZWxkcyI6IFsNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInR1IiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIlVwcGVyIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0bSIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJVcHBlciBDdWJlL0NvbmUgTWlzc2VkIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiY291bnRlciIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiAwLA0KICAgICAgICAgICAgICAgICAgICAibWluIjogMCwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAidGYiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiTWlkZGxlIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0byIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJNaWRkbGUgQ3ViZS9Db25lIE1pc3NlZCIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImNvdW50ZXIiLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogMCwNCiAgICAgICAgICAgICAgICAgICAgIm1pbiI6IDAsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlDQogICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICB7DQogICAgICAgICAgICAgICAgICAgICJjb2RlIjogInRsIiwNCiAgICAgICAgICAgICAgICAgICAgInRpdGxlIjogIkxvd2VyIEN1YmUvQ29uZSBTY29yZWQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJjb3VudGVyIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IDAsDQogICAgICAgICAgICAgICAgICAgICJtaW4iOiAwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0biIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJMb3dlciBDdWJlL0NvbmUgTWlzc2VkIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiY291bnRlciIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiAwLA0KICAgICAgICAgICAgICAgICAgICAibWluIjogMCwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiY2wiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiUGljayB1cCBDdWJlL0NvbmUgd2hlcmUiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJzZWxlY3QiLA0KICAgICAgICAgICAgICAgICAgICAiY2hvaWNlcyI6IHsNCiAgICAgICAgICAgICAgICAgICAgICAgICJTVUJTVEFUSU9OIjogIlN1YnN0YXRpb24iLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkdST1VORCI6ICJHcm91bmQiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIkJPVEgiOiAiQm90aCIsDQogICAgICAgICAgICAgICAgICAgICAgICAiWCI6ICJOb3QgQXR0ZW1wdGVkIg0KICAgICAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogIlgiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJ0diIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJMaW5rcyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImNvdW50ZXIiLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogMCwNCiAgICAgICAgICAgICAgICAgICAgIm1pbiI6IDAsDQogICAgICAgICAgICAgICAgICAgICJyZXF1aXJlZCI6IGZhbHNlDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgXQ0KICAgICAgICB9LA0KICAgICAgICB7DQogICAgICAgICAgICAibmFtZSI6ICJFbmRnYW1lIiwNCiAgICAgICAgICAgICJmaWVsZHMiOiBbDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJiZSIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJBdHRlbXB0ZWQgYmVmb3JlIEVuZGdhbWUiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJjbCIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJDaGFyZ2UgU3RhdGlvbiIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInNlbGVjdCIsDQogICAgICAgICAgICAgICAgICAgICJjaG9pY2VzIjogew0KICAgICAgICAgICAgICAgICAgICAgICAgIkRPQ0siOiAiRG9ja2VkIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJET0NLIEVOR0FHRSI6ICJEb2NrZWQgYW5kIEVuZ2FnZWQiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlBBUktFRCI6ICJQYXJrZWQiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIlgiOiAiTm90IEF0dGVtcHRlZCINCiAgICAgICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICJYIiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiY24iLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiIyBvZiBhbGxpYW5jZSBib3RzIGRvY2tlZCIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogImNvdW50ZXIiLA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogMCwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9DQogICAgICAgICAgICBdDQogICAgICAgIH0sDQogICAgICAgIHsNCiAgICAgICAgICAgICJuYW1lIjogIlBvc3RtYXRjaCIsDQogICAgICAgICAgICAiZmllbGRzIjogWw0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiZHMiLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiRHJpdmVyIFNraWxsIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAic2VsZWN0IiwNCiAgICAgICAgICAgICAgICAgICAgImNob2ljZXMiOiB7DQogICAgICAgICAgICAgICAgICAgICAgICAiMSI6ICJOb3QgRWZmZWN0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICIyIjogIkF2ZXJhZ2UiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIjMiOiAiVmVyeSBFZmZlY3RpdmUiLA0KICAgICAgICAgICAgICAgICAgICAgICAgIngiOiAiTm90IE9ic2VydmVkIg0KICAgICAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgICAgICAiZGVmYXVsdFZhbHVlIjogIngiLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJkciIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJEZWZlbnNlIFJhdGluZyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInNlbGVjdCIsDQogICAgICAgICAgICAgICAgICAgICJjaG9pY2VzIjogew0KICAgICAgICAgICAgICAgICAgICAgICAgIjEiOiAiTm90IEVmZmVjdGl2ZSIsDQogICAgICAgICAgICAgICAgICAgICAgICAiMiI6ICJBdmVyYWdlIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICIzIjogIlZlcnkgRWZmZWN0aXZlIiwNCiAgICAgICAgICAgICAgICAgICAgICAgICJ4IjogIk5vdCBPYnNlcnZlZCINCiAgICAgICAgICAgICAgICAgICAgfSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICJ4IiwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAiZCIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJEaWVkIiwNCiAgICAgICAgICAgICAgICAgICAgInR5cGUiOiAiYm9vbGVhbiIsDQogICAgICAgICAgICAgICAgICAgICJkZWZhdWx0VmFsdWUiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgInJlcXVpcmVkIjogZmFsc2UNCiAgICAgICAgICAgICAgICB9LA0KICAgICAgICAgICAgICAgIHsNCiAgICAgICAgICAgICAgICAgICAgImNvZGUiOiAidG8iLA0KICAgICAgICAgICAgICAgICAgICAidGl0bGUiOiAiVGlwcGVkIE92ZXIiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJjZiIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJZZWxsb3cvUmVkIENhcmQiLA0KICAgICAgICAgICAgICAgICAgICAidHlwZSI6ICJib29sZWFuIiwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6IGZhbHNlLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZQ0KICAgICAgICAgICAgICAgIH0sDQogICAgICAgICAgICAgICAgew0KICAgICAgICAgICAgICAgICAgICAiY29kZSI6ICJjbyIsDQogICAgICAgICAgICAgICAgICAgICJ0aXRsZSI6ICJDb21tZW50cyIsDQogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInRleHQiLA0KICAgICAgICAgICAgICAgICAgICAibWluIjogMCwNCiAgICAgICAgICAgICAgICAgICAgIm1heCI6IDUwLA0KICAgICAgICAgICAgICAgICAgICAicmVxdWlyZWQiOiBmYWxzZSwNCiAgICAgICAgICAgICAgICAgICAgImRlZmF1bHRWYWx1ZSI6ICIiDQogICAgICAgICAgICAgICAgfQ0KICAgICAgICAgICAgXQ0KICAgICAgICB9DQogICAgXQ0KfQ==";
+            let myVar = localStorage[key];
+            if (typeof myVar === 'undefined') {
+                // if there is no configuration in local storage 
+                myVar = defaultconfig;
+                localStorage[key] = myVar ;
+            }
+            return atob(myVar); // this decodes the config data
+        }
+
+        function addTextInput(aField, divid) {
+            const inputDiv = document.getElementById(divid);
+
+            itemDiv = document.createElement("div");
+            itemDiv.setAttribute("class", "textinput");
+            inputDiv.appendChild(itemDiv);
+
+
+
+
+            itemLabel = document.createElement("p");
+            itemLabel.innerHTML = aField.title
+            itemLabel.setAttribute("class", "input-p");
+            itemDiv.appendChild(itemLabel);
+            // need to test if required
+            itemLabel.innerHTML += "!!"
+            itemLabel.setAttribute("class", "input-p-required");
+           
+
+
+            formitem = document.createElement("input");
+            formitem.setAttribute("type", "text");
+            formitem.setAttribute("name", aField.code);
+            formitem.setAttribute("parent", divid);
+            itemDiv.appendChild(formitem);
+            itemBR = document.createElement("BR");
+            itemDiv.appendChild(itemBR);
+        }
+
+        function addNumberInput(aField, divid) {
+            const inputDiv = document.getElementById(divid);
+
+            itemDiv = document.createElement("div");
+            itemDiv.setAttribute("class", "numberinput");
+            inputDiv.appendChild(itemDiv);
+
+            itemLabel = document.createElement("number");
+            itemLabel.innerHTML = aField.title
+            itemDiv.appendChild(itemLabel);
+
+
+
+            formitem = document.createElement("input");
+            formitem.setAttribute("type", "text");
+            formitem.setAttribute("name", aField.code);
+            formitem.setAttribute("parent", divid);
+            itemDiv.appendChild(formitem);
+            itemBR = document.createElement("BR");
+            itemDiv.appendChild(itemBR);
+        }
+
+        function addCheckbox(aField, divid) {
+            const inputDiv = document.getElementById(divid);
+
+            itemDiv = document.createElement("div");
+            itemDiv.setAttribute("class", "checkboxinput");
+            inputDiv.appendChild(itemDiv);
+
+            formitem = document.createElement("input");
+            formitem.setAttribute("type", "checkbox");
+            formitem.setAttribute("name", aField.code);
+            formitem.setAttribute("parent", divid);
+            formitem.setAttribute("value", true);
+            itemDiv.appendChild(formitem);
+
+            // creating label for checkbox
+            let label = document.createElement('label');
+
+            // assigning attributes for 
+            // the created label tag 
+            label.htmlFor = "id";
+            // appending the created text to 
+            // the created label tag 
+            label.appendChild(document.createTextNode(aField.title));
+            // appending the checkbox
+            // and label to div
+            itemDiv.appendChild(label);
+            itemDiv.appendChild(formitem);
+
+            itemBR = document.createElement("BR");
+            itemDiv.appendChild(itemBR);
+
+
+
+
+        }
+
+        function addSelectInput(aField, divid) {
+            const inputDiv = document.getElementById(divid);
+
+            itemDiv = document.createElement("div");
+            itemDiv.setAttribute("class", "selectinput");
+            inputDiv.appendChild(itemDiv);
+
+            const choices = aField.choices;
+
+            itemLabel = document.createElement("p");
+            itemLabel.setAttribute("class", "input-p");
+            itemLabel.innerHTML = aField.title
+            itemDiv.appendChild(itemLabel);
+
+
+
+            formitem = document.createElement("select");
+            formitem.setAttribute("id", "select");
+            formitem.setAttribute("name", aField.code);
+            formitem.setAttribute("parent", divid);
+            itemDiv.appendChild(formitem);
+
+            for (const key in choices) {
+                anOption = document.createElement("option");
+                anOption.value = key;
+                anOption.text = choices[key];
+                formitem.appendChild(anOption);
+            }
+
+            itemBR = document.createElement("BR");
+            itemDiv.appendChild(itemBR);
+        }
+
+        function increment() {
+            // use the "this" object to determine what is being 
+            //          alert("I got here 1")
+            let counterid=this.getAttribute("counterid");
+            let counterfield = document.getElementById(counterid);
+            let countervalue = parseInt(counterfield.innerHTML);
+            countervalue++;
+            counterfield.innerHTML= countervalue
+
+            return;
+        }
+        function decrement() {
+            // use the "this" object to determine what is being 
+            //          alert("I got here 2")
+            let counterid=this.getAttribute("counterid");
+            let counterfield = document.getElementById(counterid);
+            let countervalue = parseInt(counterfield.innerHTML);
+            --countervalue;
+            if (countervalue < 0) {
+                countervalue = 0;
+            }
+            counterfield.innerHTML= countervalue
+            return;
+        }
+
+        function addCounter(aField, divid) {
+            const inputDiv = document.getElementById(divid);
+            let buttoncounter = inputDiv.getElementsByClassName('countercontainer').length+1; // # of inputs on this section div
+            let counterid = divid + "-counter-"+ buttoncounter
+            itemDiv = document.createElement("div");
+            itemDiv.setAttribute("class", "numberinput");
+            inputDiv.appendChild(itemDiv);
+
+            countercontainer = document.createElement("div");
+            countercontainer.setAttribute("class", "countercontainer");
+            countercontainer.setAttribute("id",counterid);
+            countercontainer.innerHTML = 0;
+            itemDiv.appendChild(countercontainer);
+
+
+
+            incrementbtn = document.createElement("button");
+            incrementbtn.setAttribute("id", divid + "-inc-" + buttoncounter);
+            incrementbtn.setAttribute("type", "button");
+            incrementbtn.setAttribute("class", "incrementbutton");
+            incrementbtn.setAttribute("counterid", counterid);
+            decrementbtn = document.createElement("button");
+            decrementbtn.setAttribute("id", divid + "-dec-" + buttoncounter);
+            decrementbtn.setAttribute("type", "button");
+            decrementbtn.setAttribute("class", "decrementbutton");
+            decrementbtn.setAttribute("counterid",  counterid);
+
+            incrementbtn.innerHTML = "Up";
+            incrementbtn.onclick=increment;
+            decrementbtn.innerHTML = "Down";
+            decrementbtn.onclick=decrement;
+
+            itemDiv.appendChild(incrementbtn);
+            itemDiv.appendChild(decrementbtn);
+        }
+
+        function processSection(thisSection, divid) {
+            const fields = thisSection.fields;
+            const thisName = thisSection.name;
+
+            const itemDiv = document.getElementById(divid);
+            sectiontitle = document.createElement("div");
+            sectiontitle.setAttribute("class", "sectiontitle");
+            sectiontitle.innerHTML = "<p>" + thisSection.name + "</p>";
+            itemDiv.appendChild(sectiontitle);
+
+            fieldsdiv = document.createElement("div");
+            fieldsdiv.setAttribute("class", "fieldsdiv");
+            fieldsdivid = divid + "-" + thisSection.name
+            fieldsdiv.setAttribute("id", fieldsdivid);
+
+            itemDiv.appendChild(fieldsdiv);
+
+
+
+
+
+            for (let fieldindex = 0; fieldindex < fields.length; fieldindex++) {
+                const theField = fields[fieldindex];
+                switch (theField.type) {
+                    case "text":
+                        addTextInput(theField, fieldsdivid)
+                        break;
+                    case "select":
+                        addSelectInput(theField, fieldsdivid)
+                        break;
+                    case "boolean":
+                        addCheckbox(theField, fieldsdivid)
+                        break;
+                    case "counter":
+                        addCounter(theField, fieldsdivid)
+                        break;
+                    case "number":
+                        break;
+                }
+
+            }
+
+        }
+
+        function populateForm() {
+
+            const somevalue = getCached("somevalue");
+            const theconfig = JSON.parse(somevalue);
+            const sections = theconfig.sections;
+            const element = document.getElementById("myForm");
+
+
+
+            formdiv = document.createElement("div");
+            formdiv.setAttribute("class", "formdiv");
+
+            element.appendChild(formdiv);
+
+
+
+
+            for (let index = 0; index < sections.length; index++) {
+                const thisSection = sections[index];
+                itemDiv = document.createElement("div");
+                itemDiv.setAttribute("class", "section");
+                itemDiv.setAttribute("id", "section" + index);
+                formdiv.appendChild(itemDiv);
+                processSection(thisSection, "section" + index)
+                /*
+                                itemLabel = document.createElement("Label");
+                                itemLabel.innerHTML = "Name" + index;
+                                itemDiv.appendChild(itemLabel);
+                
+                
+                
+                                formitem = document.createElement("input");
+                                formitem.setAttribute("type", "text");
+                                formitem.setAttribute("name", "fname" + index);
+                                itemDiv.appendChild(formitem);
+                                itemBR = document.createElement("BR");
+                                itemDiv.appendChild(itemBR);
+                
+                */
+
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <h2>JavaScript Validation</h2>
+
+    <form id="myForm" name="myForm" action="javascript:action()" onsubmit="return validateForm()" method="post">
+        <script>populateForm()</script>
+     <input type="submit" value="Submit" action="javascript:submitaction()">
+    </form>
+
+</body>
+
+</html>
